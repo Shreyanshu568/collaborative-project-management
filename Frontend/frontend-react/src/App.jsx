@@ -270,7 +270,7 @@ export default function App() {
     }
   };
 
-  // Formal Login
+  // Formal Login and logout :- 
   const handleLogin = async (e) => {
     e.preventDefault();
     const res = await apiCall("/auth/login", "POST", loginForm);
@@ -279,6 +279,12 @@ export default function App() {
       setShowLoginModal(false);
       showAlert(`Logged in as ${res.name}`, "success");
     }
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(PRESET_USERS[4]); // Resets identity to Viewer
+    setShowLoginModal(true);
+    showAlert("Signed out successfully. Switched to Viewer (Read-Only).", "info");
   };
 
   const isAdmin = currentUser.role === "admin";
@@ -320,6 +326,9 @@ export default function App() {
             )}
             <button onClick={() => setShowLoginModal(true)} className="text-xs border border-indigo-400 hover:bg-indigo-800 text-white px-3 py-1.5 rounded font-semibold transition">
               🔑 Login
+            </button>
+            <button onClick={handleLogout} className="text-xs border border-rose-400 hover:bg-rose-600 text-white px-2.5 py-1.5 rounded font-semibold transition">
+              🚪 Sign Out
             </button>
             <div className="text-right">
               <div className="font-semibold text-white text-xs">{currentUser.name}</div>
